@@ -1,6 +1,6 @@
 # Party! 
 
-http://orindance.party/
+https://orindance.party/
 
 ## Credit
 
