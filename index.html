@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Party!</title>
+</head>
+
+<body>
+	<img id="image" onclick="randomImage()"/>
+
+	<script type="text/javascript">
+		var images = [
+			"https://media.discordapp.net/attachments/163382741491122176/846505441323909140/caption-22.gif",
+			"https://media.tenor.com/images/c73112547c624c71d010de55435b4b13/tenor.gif"
+		];
+		function randomImage() {
+		  var random_index = Math.floor(images.length * Math.random())
+		  document.getElementById("image").src = images[random_index];
+		}
+		randomImage();
+	</script>
+
+</body>
+
+</html>
