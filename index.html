@@ -44,21 +44,52 @@
 			showRandomMedia();
 		}
 
-		function showRandomMedia() {
-			var total_media_length = images.length + videos.length;
-			show_image_or_video = Math.floor(total_media_length * Math.random()) < images.length ? "show_image" : "show_video";
+		var storage = localStorage["notPickedIndexes"];
+		if (storage) notPickedIndexes = JSON.parse(storage); else notPickedIndexes = constructNotPickedIndexes();
 
-			if (show_image_or_video == "show_image") {
-				var random_image_index = Math.floor(images.length * Math.random());
-				document.getElementById("video").style.display = "none";
-				document.getElementById("image").style.display = "inline";
-				document.getElementById("image").src = images[random_image_index];
-			} else if (show_image_or_video == "show_video") {
-				var random_video_index = Math.floor(videos.length * Math.random());
-				document.getElementById("image").style.display = "none";
-				document.getElementById("video").style.display = "inline";
-				document.getElementById("video").src = videos[random_video_index];
+		function constructNotPickedIndexes(){
+			return Array.from(Array(images.length + videos.length).keys());
+		}
+
+		function removeFromNotPickedIndexes(element){
+			 for( var i = 0; i < notPickedIndexes.length; i++){
+				if ( notPickedIndexes[i] === element) {
+					notPickedIndexes.splice(i, 1);
+				}
 			}
+		}
+
+		function showRandomMedia() {
+			if (notPickedIndexes.length === 0) notPickedIndexes = constructNotPickedIndexes();
+			random_media_index = getRandomMediaIndex();
+
+			if ( random_media_index < images.length ) {
+				document.getElementById("image").src = images[random_media_index];
+				hideVideoSwitch();
+			} else {
+				var video_index = random_media_index - images.length;
+				document.getElementById("video").src = videos[video_index];
+				 // after the video ends it kinda flashes with previous image when showing next, so just remove src
+				document.getElementById("image").src = ""
+				hideImageSwitch();
+			}
+		}
+
+		function hideImageSwitch() {
+			document.getElementById("image").style.display = "none";
+			document.getElementById("video").style.display = "inline";
+		}
+
+		function hideVideoSwitch() {
+			document.getElementById("video").style.display = "none";
+			document.getElementById("image").style.display = "inline";
+		}
+
+		function getRandomMediaIndex() {
+			var random_media_index = notPickedIndexes[Math.floor(Math.random() * notPickedIndexes.length)];
+			removeFromNotPickedIndexes(random_media_index);
+			localStorage["notPickedIndexes"] = JSON.stringify(notPickedIndexes);
+			return random_media_index;
 		}
 
 		showRandomMedia();
