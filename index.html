@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Party!</title>
 </head>
@@ -7,33 +8,60 @@
 <body style="background-color:#0e1011;">
 
 	<center>
-		<img id="image" onclick="randomImage()"/>
+		<img id="image" src="" onclick="showRandomMedia()" style="display:none"/>
+
+		<video id="video" src="" style="display:none" controls>
+			Video playback not supported on your browser.
+		</video>
 	</center>
 
 	<script type="text/javascript">
 		var images = [
-                        "https://cdn.discordapp.com/attachments/850843243695439892/850843328127959060/5e672f97dc555.gif",
-                        "https://cdn.discordapp.com/attachments/850843243695439892/850843331516039218/1559518453_Ringood.gif",
-                        "https://cdn.discordapp.com/attachments/850843243695439892/850843831967547402/orin.gif",			
-                        "https://cdn.discordapp.com/attachments/850843243695439892/850843849642606612/orinpok.gif",
-                        "https://cdn.discordapp.com/attachments/753424871760855122/884417334427660348/what-the-orin.gif",
-                        "https://cdn.discordapp.com/attachments/753424871760855122/886549772457095198/orin-dance-0000.gif",
-                        "https://c.tenor.com/54JhE-etqj8AAAAC/orin-rinkaenbyou.gif",
-                        "https://giffiles.alphacoders.com/766/76652.gif",
-                        "https://c.tenor.com/fwhRxej8fzcAAAAC/touhou-orin.gif",
-                        "https://c.tenor.com/9KByPbwNG3EAAAAC/orin-touhou-orin.gif",
-                        "https://i.kym-cdn.com/photos/images/original/001/049/308/c58.gif",
-                        "https://c.tenor.com/_Evh3wfO6sgAAAAM/party-time-touhou.gif",
-                        "https://c.tenor.com/ftslutYNByMAAAAM/orin-touhou.gif",
-                        "https://c.tenor.com/fTHfePA6q-wAAAAM/touhou-dance.gif",
-                        "https://c.tenor.com/MnA8P55vfrgAAAAM/touhou-touhou-project.gif",
-                        "https://media.discordapp.net/attachments/593492942987984951/910122344654176297/orin_civ.gif",
+			"https://cdn.discordapp.com/attachments/850843243695439892/850843328127959060/5e672f97dc555.gif",
+			"https://cdn.discordapp.com/attachments/850843243695439892/850843331516039218/1559518453_Ringood.gif",
+			"https://cdn.discordapp.com/attachments/850843243695439892/850843831967547402/orin.gif",
+			"https://cdn.discordapp.com/attachments/850843243695439892/850843849642606612/orinpok.gif",
+			"https://cdn.discordapp.com/attachments/753424871760855122/884417334427660348/what-the-orin.gif",
+			"https://cdn.discordapp.com/attachments/753424871760855122/886549772457095198/orin-dance-0000.gif",
+			"https://c.tenor.com/54JhE-etqj8AAAAC/orin-rinkaenbyou.gif",
+			"https://giffiles.alphacoders.com/766/76652.gif",
+			"https://c.tenor.com/fwhRxej8fzcAAAAC/touhou-orin.gif",
+			"https://c.tenor.com/9KByPbwNG3EAAAAC/orin-touhou-orin.gif",
+			"https://i.kym-cdn.com/photos/images/original/001/049/308/c58.gif",
+			"https://c.tenor.com/_Evh3wfO6sgAAAAM/party-time-touhou.gif",
+			"https://c.tenor.com/ftslutYNByMAAAAM/orin-touhou.gif",
+			"https://c.tenor.com/fTHfePA6q-wAAAAM/touhou-dance.gif",
+			"https://c.tenor.com/MnA8P55vfrgAAAAM/touhou-touhou-project.gif",
+			"https://media.discordapp.net/attachments/593492942987984951/910122344654176297/orin_civ.gif",
 		];
-		function randomImage() {
-			var random_index = Math.floor(images.length * Math.random())
-			document.getElementById("image").src = images[random_index];
+
+		var videos = [
+			"https://cdn.discordapp.com/attachments/850843243695439892/1001942032220168245/Orin.mp4",
+		];
+
+		document.getElementById("video").addEventListener("ended", onVideoEnd, false);
+		function onVideoEnd(e) {
+			showRandomMedia();
 		}
-		randomImage();
+
+		function showRandomMedia() {
+			var total_media_length = images.length + videos.length;
+			show_image_or_video = Math.floor(total_media_length * Math.random()) < images.length ? "show_image" : "show_video";
+
+			if (show_image_or_video == "show_image") {
+				var random_image_index = Math.floor(images.length * Math.random());
+				document.getElementById("video").style.display = "none";
+				document.getElementById("image").style.display = "inline";
+				document.getElementById("image").src = images[random_image_index];
+			} else if (show_image_or_video == "show_video") {
+				var random_video_index = Math.floor(videos.length * Math.random());
+				document.getElementById("image").style.display = "none";
+				document.getElementById("video").style.display = "inline";
+				document.getElementById("video").src = videos[random_video_index];
+			}
+		}
+
+		showRandomMedia();
 	</script>
 
 </body>
